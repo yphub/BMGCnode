@@ -1,0 +1,24 @@
+{
+  "name": "rovnode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mrshell",
+  "license": "ISC",
+  "dependencies": {
+    "i2c-bus": "^4.0.1",
+    "koa": "^2.5.2",
+    "koa-body": "^4.0.4",
+    "koa-router": "^7.4.0",
+    "koa-socket-2": "^1.0.17",
+    "koa-static": "^5.0.0",
+    "log4js": "^3.0.3",
+    "pca9685": "^4.0.3",
+    "serialport": "^6.2.2",
+    "socket.io": "^2.1.1",
+    "ws": "^6.0.0"
+  }
+}
