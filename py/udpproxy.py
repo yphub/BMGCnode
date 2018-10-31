@@ -14,7 +14,7 @@ def parseArg():
     except getopt.GetoptError:
         print("get opt error")
         return res
-    for key, val in opts:        
+    for key, val in opts:
         if key in ('-m', '--mavlinkport'):
             res['mavlinkport'] = val
     return res
@@ -22,12 +22,12 @@ def parseArg():
 
 res = parseArg()
 
-print("Args parsed. Start Listening to udp")
+print("Args parsed. Start Listening to udp port", res['mavlinkport'])
 
-# master = mavutil.mavlink_connection('udp:0.0.0.0:' + res['mavlinkport'])
+master = mavutil.mavlink_connection('udp:0.0.0.0:' + res['mavlinkport'])
 
 # master.wait_heartbeat()
-# print('get heartbeat')
+print('get heartbeat')
 
 while True:
     data = input()
@@ -36,15 +36,16 @@ while True:
         data = loads(data)
         method = data['type'] + '_send'
 
-        print('receive data type: ' + data['type'])
+        if data['type'] != 'heartbeat':
+            print('receive data type: ' + data['type'])
 
-        # if hasattr(master.mav, method):
-        #     func = getattr(master.mav, method)
-        #     if hasattr(func, '__call__'):
-        #         func(*data['args'])
-        #     else:
-        #         print(method + ' is not callable!')
-        # else:
-        #     print('Cannot find method ' + method + '!')
+        if hasattr(master.mav, method):
+            func = getattr(master.mav, method)
+            if hasattr(func, '__call__'):
+                func(*data['args'])
+            else:
+                print(method + ' is not callable!')
+        else:
+            print('Cannot find method ' + method + '!')
     except Exception as e:
         print(e)

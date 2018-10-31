@@ -12,7 +12,7 @@ module.exports = {
         categories: {
             default: {
                 appenders: ['BMGC'],
-                level: 'debug'
+                level: 'ALL'
             }
         }
     }

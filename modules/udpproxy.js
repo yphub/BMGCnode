@@ -10,7 +10,7 @@ const udpServer = dgram.createSocket("udp4");
 
 udpServer.bind(config.nodeudp);
 udpServer.on("message", cmd => {
-    logger.log(cmd);
+    logger.info(cmd);
     port.write(cmd);
 });
 
@@ -19,5 +19,5 @@ port.on('buffer', buffer => {
 });
 
 
-logger.log(`udp server listening at port ${config.nodeudp}`);
+logger.debug(`Node udp server listening at port ${config.nodeudp}`);
 module.exports = udpServer;

@@ -37,7 +37,7 @@ class Pca extends Pca9685Driver {
     setTank(lspeed, rspeed) {
         let speedlist = lspeed < 0 ? [-lspeed, 0] : [0, lspeed]
         speedlist.push.apply(speedlist, rspeed < 0 ? [-rspeed, 0] : [0, rspeed])
-        console.log("pca.setTank,speedlist: ", speedlist)
+        logger.info("pca.setTank,speedlist: ", speedlist)
         this.setRange(8, speedlist)
     }
 
@@ -49,7 +49,7 @@ class Pca extends Pca9685Driver {
      * @memberof Pca
      */
     setRange(start, arglist) {
-        console.log(arglist);
+        logger.info(arglist);
         arglist.forEach((value, index) => {
             this.setDutyCycle(start + index, value)
         })
@@ -57,16 +57,16 @@ class Pca extends Pca9685Driver {
 }
 
 if (process.platform == "win32") {
-    console.warn("platform is on win32; fake PCA9685 on.");
+    logger.warn("platform is on win32; fake PCA9685 on.");
     module.exports = {
         setRange(data) {
-            console.log("pca.setRange : ", data);
+            logger.info("pca.setRange : ", data);
         },
         setTank(arr) {
-            console.log("pca.setTank  : ", arr);
+            logger.info("pca.setTank  : ", arr);
         },
         setDutyCycle(id, data) {
-            console.log("pca.setDutyCycle : ", id, " ", data);
+            logger.info("pca.setDutyCycle : ", id, " ", data);
         }
     };
 } else {
@@ -76,7 +76,7 @@ if (process.platform == "win32") {
         // debug: true
     }, function (err) {
         if (err) {
-            console.log("pca: ", err);
+            logger.error("pca: ", err);
         }
         // pca.setDutyCycle(8, 0.15);
 

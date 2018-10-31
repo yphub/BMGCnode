@@ -1,11 +1,12 @@
 const Koa = require('koa');
 const static = require('koa-static');
 const log4js = require('log4js');
-const io = require('./modules/iohandler');
+const path = require('path');
 const config = require('./config');
 
 log4js.configure(config.log4js);
 
+const io = require('./modules/iohandler');
 
 const pyMaster = require('./modules/pymaster');
 pyMaster.start();
@@ -25,9 +26,11 @@ app._io.on('connection', ws => {
     });
 });
 
-app.use(static(`${__dirname}/BMGC/dist`))
+const staticPath = `${path.resolve(__dirname)}/BMGC/dist`;
+app.use(static(staticPath));
+logger.debug(`static path is : ${staticPath}`);
 app.use(router.routes());
 
 app.listen(config.port, function () {
-    logger.log(`Listening on port ${config.port}`)
+    logger.debug(`Listening on port ${config.port}`)
 });

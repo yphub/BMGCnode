@@ -51,20 +51,20 @@ async function tempEvent() {
     });
     let list = str.split(' ');
     let temp = list[list.length - 1];
-    console.log("boardcast " + temp);
+    logger.info("boardcast " + temp);
     io.broadcast("temp", temp);
     setTimeout(tempEvent, 2000)
 }
 
 if (process.platform === "win32") {
     tempEvent = function () {
-        console.warn("platform is win32; fake tempRead on.");
+        logger.warn("platform is win32; fake tempRead on.");
         let q = 333333;
-        setInterval(() => {
+        /*setInterval(() => {
             io.broadcast("temp", String(q));
-            console.log(`faking temp: ${q}`);
+            logger.info(`faking temp: ${q}`);
             q += 5;
-        }, 2000);
+        }, 2000);*/
     }
 }
 

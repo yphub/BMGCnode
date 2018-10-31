@@ -20,28 +20,28 @@ class PyMaster {
             if (!line) continue;
             let pid = /pi\s*([\d]*)/.exec(line)[1];
             try {
-                console.log(`killing python process id: ${pid}`);
+                logger.error(`killing python process id: ${pid}`);
                 await exec(`kill -9 ${pid}`)
             } catch (e) {
-                console.warn(e);
+                logger.error(e);
             }
         }
     }
     async start() {
         const args = [path.resolve(`${__dirname}/../py/udpproxy.py`), `--mavlinkport=${config.pymavlink}`];
 
-        console.log('--- python ' + args.join(' '));
+        logger.debug(args.join(' '));
         const cp = childProcess.spawn('python', args, {
             stdio: ['pipe', 'pipe', process.stderr]
         });
         this.cp = cp;
 
         cp.stdout.on('data', data => {
-            console.log("python : ", data.toString().trim());
-        });        
+            logger.info(data.toString().trim());
+        });
 
         cp.on('error', async e => {
-            console.warn("child process error: " + e);
+            logger.error("child process error: " + e);
             await this.killPy();
             setTimeout(this.start, 2000);
             delete this.cp;
