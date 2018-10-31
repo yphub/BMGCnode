@@ -25,7 +25,7 @@ app._io.on('connection', ws => {
     });
 });
 
-app.use(static(`${__dirname}/static`))
+app.use(static(`${__dirname}/BMGC/dist`))
 app.use(router.routes());
 
 app.listen(config.port, function () {

@@ -1,0 +1,3 @@
+[submodule "BMGC"]
+	path = BMGC
+	url = https://github.com/yphub/BMGC.git
